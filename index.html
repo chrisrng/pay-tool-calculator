@@ -35,48 +35,48 @@
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-red-400 uppercase">Total Overhead (Yearly)</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input class="rounded py-2 px-4 xl:w-1/2 w-full bg-red-100 appearance-none" id="overhead" type="number" value=10000>
+                <input class="rounded py-2 px-4 xl:w-1/2 w-full bg-red-100 appearance-none" id="overhead" type="number">
               </dd>
             </div>
             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">Working Weeks Per Year</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="range" id="workingweeks" min="1" max="52" value="40" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
-                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="workingweeks-val">40</p>
+                <input type="range" id="workingweeks" min="1" max="52" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
+                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="workingweeks-val"></p>
               </dd>
             </div>
             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">Market Rate Sessions (Per Week)</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="range" id="marketsessions" min="1" max="40" value="20" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
-                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="marketsessions-val">20</p>
+                <input type="range" id="marketsessions" min="0" max="40" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
+                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="marketsessions-val"></p>
               </dd>
             </div>
             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">Sliding Rate Sessions (Per Week)</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="range" id="slidingsessions" min="1" max="40" value="20" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
-                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="slidingsessions-val">20</p>
+                <input type="range" id="slidingsessions" min="0" max="40" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
+                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="slidingsessions-val"></p>
               </dd>
             </div>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">Market Rate</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input class="rounded py-2 px-4 xl:w-1/2 w-full bg-indigo-100 appearance-none" id="market" type="number" value=250>
+                <input class="rounded py-2 px-4 xl:w-1/2 w-full bg-indigo-100 appearance-none" id="market" type="number">
               </dd>
             </div>
             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">Highest Sliding Rate</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="range" id="highest" min="1" max="999" value="150" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
-                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="highest-val">150</p>
+                <input type="range" id="highest" min="0" max="999" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
+                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="highest-val"></p>
               </dd>
             </div>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">Lowest Sliding Rate</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="range" id="lowest" min="1" max="999" value="100" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
-                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="lowest-val">100</p>
+                <input type="range" id="lowest" min="0" max="999" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
+                <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="lowest-val"></p>
               </dd>
             </div>
           </dl>
@@ -89,20 +89,34 @@
 </body>
 <script>
   window.onload = () => {
-    this.findYourRateContext = {};
+    // Load existing local storage if available
+    if (window.localStorage && localStorage.getItem('context')) {
+      this.findYourRateContext = JSON.parse(localStorage.getItem('context'));
+    } else {
+      this.findYourRateContext = {};
+    }
+    const {
+      overhead = 10000,
+      workingweeks = 40,
+      marketsessions = 20,
+      slidingsessions = 20,
+      market = 250,
+      highest = 150,
+      lowest = 100
+    } = this.findYourRateContext;
 
     // Parameters
-    setupNumberInputListener(this.findYourRateContext, 'overhead', 10000);
-    setupRangeInputListener(this.findYourRateContext, 'workingweeks', 40);
+    setupNumberInputListener(this.findYourRateContext, 'overhead', overhead);
+    setupRangeInputListener(this.findYourRateContext, 'workingweeks', workingweeks);
 
     // Sessions
-    setupRangeInputListener(this.findYourRateContext, 'marketsessions', 20);
-    setupRangeInputListener(this.findYourRateContext, 'slidingsessions', 20);
+    setupRangeInputListener(this.findYourRateContext, 'marketsessions', marketsessions);
+    setupRangeInputListener(this.findYourRateContext, 'slidingsessions', slidingsessions);
 
     // Rates
-    setupNumberInputListener(this.findYourRateContext, 'market', 250);
-    setupRangeInputListener(this.findYourRateContext, 'highest', 150);
-    setupRangeInputListener(this.findYourRateContext, 'lowest', 100);
+    setupNumberInputListener(this.findYourRateContext, 'market', market);
+    setupRangeInputListener(this.findYourRateContext, 'highest', highest);
+    setupRangeInputListener(this.findYourRateContext, 'lowest', lowest);
 
     // Initialize
     findRate(this.findYourRateContext);
@@ -128,6 +142,11 @@
     // Print Result
     const resultElem = document.querySelector('#total-compensation');
     resultElem.innerHTML = `${resultLow} - ${resultHigh}`;
+
+    // Save to local storage
+    if (window.localStorage) {
+      localStorage.setItem('context', JSON.stringify(context));
+    }
   }
 
   function setupRangeInputListener(context, inputId, initialVal) {
