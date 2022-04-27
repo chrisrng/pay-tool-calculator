@@ -4,7 +4,10 @@
   <title>Sliding Scale Calculator</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How to set sliding scale fees for your practice. The Sliding Scale  Calculator is a tool to calculate what your expected annual compensation will be given a range of sliding scale rates and other factors. Useful for psychologists, therapists, lawyers, or any practice who use a sliding scale, adjusted scale, variable scale, or fee scale rates.">
+  <meta name="description" content="The sliding scale calculator is used to determine the minimum sliding scale rate you can charge per session and still maintain your practice.">
+  <meta name="title" property="og:title" content="Sliding Scale Calculator">
+  <meta name="author" content="Chris Ng">
+  <meta name="robots" content="index, follow" />
 
   <!-- favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="./favicon_io/apple-touch-icon.png">
@@ -29,8 +32,7 @@
   <div class="py-4 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="lg:text-center">
-        <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Pay Tool Calculator</h2>
-        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Find your sliding scale</p>
+        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Sliding Scale Calculator</p>
         <p class="my-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">How to set sliding scale fees for your practice.</p>
       </div>
 
@@ -69,27 +71,31 @@
               </dd>
             </div>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">Full Fee Rate</dt>
+              <dt class="text-sm font-medium text-gray-500">Full Fee Rate (Per Session)</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input class="rounded py-2 px-4 xl:w-1/2 w-full bg-indigo-100 appearance-none" id="market" type="number" />
               </dd>
             </div>
             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">Highest Sliding Rate</dt>
+              <dt class="text-sm font-medium text-gray-500">Highest Sliding Rate (Per Session)</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="range" id="highest" min="0" max="999" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
+                <input type="range" id="highest" min="0" max="999" step="5" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
                 <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="highest-val"></p>
               </dd>
             </div>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">Lowest Sliding Rate</dt>
+              <dt class="text-sm font-medium text-gray-500">Lowest Sliding Rate (Per Session)</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input type="range" id="lowest" min="0" max="999" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
+                <input type="range" id="lowest" min="0" max="999" step="5" class="rounded xl:w-1/2 w-full h-2 bg-indigo-100 appearance-none" />
                 <p class="xl:w-1/2 w-full mt-2 sm:text-center" id="lowest-val"></p>
               </dd>
             </div>
           </dl>
         </div>
+      </div>
+
+      <div class="lg:text-center pt-4">
+        <p class="my-4 text-gray-500 lg:mx-auto">The sliding scale calculator is used to determine the minimum sliding scale rate you can charge per session and still maintain your practice. Useful for psychologists, therapists, lawyers, or any practice who use a sliding scale, adjusted scale, variable scale, or fee scale rates.</p>
       </div>
 
     </div>
@@ -105,10 +111,10 @@
       this.findYourRateContext = {};
     }
     const {
-      overhead = 10000,
+      overhead = 25000,
       workingweeks = 40,
-      marketsessions = 20,
-      slidingsessions = 20,
+      marketsessions = 10,
+      slidingsessions = 10,
       market = 250,
       highest = 150,
       lowest = 100
